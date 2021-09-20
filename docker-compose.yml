@@ -1,0 +1,41 @@
+version: '2'
+networks:
+  my-new-network:
+    driver: bridge
+services:
+  php:
+    container_name: evrms-yii2
+    image: yiisoftware/yii2-php:7.4-apache
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    ports:
+      - '8000:80'
+    networks:
+      - my-new-network
+  
+  cron:
+    container_name: evrms-cron
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    volumes: 
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    networks:
+      - my-new-network
+
+  db:
+    container_name: evrms-db
+    image: 'mysql:latest'
+    volumes:
+        - ./database:/var/lib/mysql
+    ports:
+        - '3306:3306'
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: evermos-test-db
+    networks:
+      - my-new-network

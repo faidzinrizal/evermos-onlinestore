@@ -1,0 +1,6 @@
+* * * * * ( cd /app && php yii queue/run )
+* * * * * ( sleep 10 ; cd /app && php yii queue/run )
+* * * * * ( sleep 20 ; cd /app && php yii queue/run )
+* * * * * ( sleep 30 ; cd /app && php yii queue/run )
+* * * * * ( sleep 40 ; cd /app && php yii queue/run )
+* * * * * ( sleep 50 ; cd /app && php yii queue/run )
